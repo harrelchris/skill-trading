@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Client from "../oauth2/Client";
 
-function Navbar() {
-  const client = new Client();
-
-  if (client.isAuthenticated()) {
+function Navbar({ isAuthenticated }) {
+  if (isAuthenticated()) {
     return (
       <>
         <Link to="/">Home</Link>
