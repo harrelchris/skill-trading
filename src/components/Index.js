@@ -1,39 +1,15 @@
-import React, {useEffect, useState} from "react";
-import Evepraisal from "../api/evepraisal"
+import React, { useEffect, useState } from "react";
+import ISKTable from "./ISKTable";
 
 function Index() {
-  const evepraisal = new Evepraisal();
-  const [prices, setPrices] = useState({});
-
-  function renderItem(name) {
-    return (
-      <tr key={name}>
-        <td>{name}</td>
-        <td>{prices[name].buy}</td>
-        <td>{prices[name].sell}</td>
-      </tr>
-    );
-  }
-
-  useEffect(() => {
-    evepraisal.getPrices().then((prices) => setPrices(prices));
-  }, []);
+  const [biologyLevel, setBiologyLevel] = useState(5);
+  const [isOmega, setIsOmega] = useState(true);
 
   return (
     <>
       <h1>Index</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Buy</th>
-            <th>Sell</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(prices).map((name) => renderItem(name))}
-        </tbody>
-      </table>
+      <button onClick={e => setIsOmega(!isOmega)}>{isOmega ? "Omega" : "Alpha"}</button>
+      <ISKTable />
     </>
   );
 }
