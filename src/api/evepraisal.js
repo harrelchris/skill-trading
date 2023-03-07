@@ -14,7 +14,7 @@ class Evepraisal {
   }
 
   async #requestPrices() {
-    const response = await fetch("https://evepraisal.com/a/16dd90.json?live=yes&persist=no", {
+    const response = await fetch("https://evepraisal.com/a/16dqs6.json?live=yes&persist=no", {
       method: "GET",
       headers: {
         "User-Agent": "https://github.com/harrelchris/skill-trading"
