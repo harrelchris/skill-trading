@@ -27,6 +27,7 @@ npm start
 - move injectors and accelerators to single data table
 - format numbers using `toLocaleString()` or css
 - make all code consistent
+- migrate state handling to redux toolkit
 - position inputs and outputs
 - make responsive
 - add theme support
