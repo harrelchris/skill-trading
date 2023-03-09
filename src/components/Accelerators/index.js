@@ -16,6 +16,12 @@ function index({prices, useSellValue, biologySkillLevel, biologyImplant}) {
   const mca_sp = ((mca_hours * mca_sp_per_hour) - (mca_hours * base_sp_per_hour)).toFixed(0);
   const mca_isk_sp = (mca_isk / mca_sp).toFixed(2);
 
+  function calculateExtraSP(baseHours, modifier, bioSkill, implBonus) {
+    const hours = (baseHours * (1 + (0.2 * bioSkill))) * (1 + implBonus);
+    const sp_per_hour = ((17+modifier)+((17*0.5)+modifier))*60
+    return (hours * sp_per_hour) - (hours * 1530);
+  }
+
   return (
     <div>
       <h1>Accelerators</h1>
