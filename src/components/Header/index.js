@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
-import LoginImg from "./eve-sso-login-black-small.png";
+import LoginImg from "./img/eve-sso-login-black-small.png";
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import UserMenu from "./UserMenu";
