@@ -2,10 +2,10 @@ import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 
-import Authorize from "./components/auth/Authorize";
-import Callback from "./components/auth/Callback";
+import Authorize from "./components/Auth/Authorize";
+import Callback from "./components/Auth/Callback";
 import Index from "./components/Index";
-import Logout from "./components/auth/Logout";
+import Logout from "./components/Auth/Logout";
 
 function useQuery() {
   const { search } = useLocation();
