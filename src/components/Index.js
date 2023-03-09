@@ -3,6 +3,7 @@ import Header from "./Header";
 import Injectors from "./Injectors";
 import Accelerators from "./Accelerators";
 import Evepraisal from "../api/evepraisal";
+import Character from "./Character";
 
 function isAuthenticated() {
   const requiredKeys = ["accessToken", "refreshToken", "expiresAt", "name", "id"];
@@ -40,6 +41,11 @@ function Index() {
     },
   });
 
+  const [useSellValue, setUseSellValue] = useState(true);
+  const [biologySkillLevel, setBiologySkillLevel] = useState(0);
+  const [skillPointRange, setSkillPointRange] = useState(0);
+  const [biologyImplant, setBiologyImplant] = useState(0);
+
   useEffect(() => {
     ep.getPrices().then(priceData => setPrices(priceData));
   }, []);
@@ -47,8 +53,27 @@ function Index() {
   return (
     <>
       <Header isAuthenticated={isAuthenticated} />
-      <Injectors prices={prices} />
-      <Accelerators prices={prices} />
+      <Character
+        useSellValue={useSellValue}
+        setUseSellValue={setUseSellValue}
+        biologySkillLevel={biologySkillLevel}
+        setBiologySkillLevel={setBiologySkillLevel}
+        skillPointRange={skillPointRange}
+        setSkillPointRange={setSkillPointRange}
+        biologyImplant={biologyImplant}
+        setBiologyImplant={setBiologyImplant}
+      />
+      <Injectors
+        prices={prices}
+        useSellValue={useSellValue}
+        skillPointRange={skillPointRange}
+      />
+      <Accelerators
+        prices={prices}
+        useSellValue={useSellValue}
+        biologySkillLevel={biologySkillLevel}
+        biologyImplant={biologyImplant}
+      />
     </>
   );
 }
