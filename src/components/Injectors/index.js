@@ -1,38 +1,35 @@
-import { useState } from "react";
-
-function index({prices}) {
+function index({prices, useSellValue, skillPointRange}) {
   const bonus = {
     "Large Skill Injector": {
       0: 500000,
-      5000000: 400000,
-      50000000: 300000,
-      80000000: 150000
+      1: 400000,
+      2: 300000,
+      3: 150000
     },
     "Small Skill Injector": {
       0: 100000,
-      5000000: 80000,
-      50000000: 60000,
-      80000000: 30000
+      1: 80000,
+      2: 60000,
+      3: 30000
     }
   };
-  const [currentSP, setCurrentSP] = useState(0);
-  const [useSellValue, setUseSellValue] = useState(true);
-
   const buySellLower = useSellValue ? "sell" : "buy"
-  const buySellUpper = useSellValue ? "Sell" : "Buy"
+
+  const lsi_isk = prices["Large Skill Injector"][buySellLower];
+  const lsi_sp = bonus["Large Skill Injector"][skillPointRange];
+  const lsi_isk_sp = (prices["Large Skill Injector"][buySellLower] / bonus["Large Skill Injector"][skillPointRange]).toFixed(2)
+
+  const ssi_isk = prices["Small Skill Injector"][buySellLower];
+  const ssi_sp = bonus["Small Skill Injector"][skillPointRange];
+  const ssi_isk_sp = (prices["Small Skill Injector"][buySellLower] / bonus["Small Skill Injector"][skillPointRange]).toFixed(2)
+
+  const dai_isk = prices["Daily Alpha Injector"][buySellLower];
+  const dai_sp = 50000;
+  const dai_isk_sp = (prices["Daily Alpha Injector"][buySellLower] / 50000).toFixed(2);
 
   return (
     <div>
       <h1>Injectors</h1>
-
-      <h3>Jita {buySellUpper} Value</h3>
-      <button onClick={e => setUseSellValue(!useSellValue)}>Toggle buy/sell value</button>
-
-      <h3>Current Skill Points</h3>
-      <button onClick={e => setCurrentSP(0)}> Less than 5 million </button>
-      <button onClick={e => setCurrentSP(5000000)}> Between 5 and 50 million </button>
-      <button onClick={e => setCurrentSP(50000000)}> Between 50 and 80 million </button>
-      <button onClick={e => setCurrentSP(80000000)}> More than 80 million </button>
       <table>
         <thead>
           <tr>
@@ -45,21 +42,21 @@ function index({prices}) {
         <tbody>
           <tr>
             <td>Large Skill Injector</td>
-            <td>{prices["Large Skill Injector"][buySellLower]}</td>
-            <td>{bonus["Large Skill Injector"][currentSP]}</td>
-            <td>{prices["Large Skill Injector"][buySellLower] / bonus["Large Skill Injector"][currentSP]}</td>
+            <td>{lsi_isk}</td>
+            <td>{lsi_sp}</td>
+            <td>{lsi_isk_sp}</td>
           </tr>
           <tr>
             <td>Small Skill Injector</td>
-            <td>{prices["Small Skill Injector"][buySellLower]}</td>
-            <td>{bonus["Small Skill Injector"][currentSP]}</td>
-            <td>{prices["Small Skill Injector"][buySellLower] / bonus["Small Skill Injector"][currentSP]}</td>
+            <td>{ssi_isk}</td>
+            <td>{ssi_sp}</td>
+            <td>{ssi_isk_sp}</td>
           </tr>
           <tr>
             <td>Daily Alpha Injector</td>
-            <td>{prices["Daily Alpha Injector"][buySellLower]}</td>
-            <td>50000</td>
-            <td>{prices["Daily Alpha Injector"][buySellLower] / 50000}</td>
+            <td>{dai_isk}</td>
+            <td>{dai_sp}</td>
+            <td>{dai_isk_sp}</td>
           </tr>
         </tbody>
       </table>
@@ -67,4 +64,4 @@ function index({prices}) {
   );
 }
 
-export default index
+export default index;
