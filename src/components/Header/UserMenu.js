@@ -13,6 +13,7 @@ function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,9 +50,7 @@ function UserMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to="/auth/logout">Logout</Link>
-        </MenuItem>
+        <MenuItem component={Link} to={'/auth/logout'}>Logout</MenuItem>
       </Menu>
 
     </>
