@@ -1,26 +1,24 @@
-import {useState} from "react";
-
-function index({prices}) {
-  const [useSellValue, setUseSellValue] = useState(true);
-
+function index({prices, useSellValue, biologySkillLevel, biologyImplant}) {
   const buySellLower = useSellValue ? "sell" : "buy"
-  const buySellUpper = useSellValue ? "Sell" : "Buy"
+  const base_sp_per_hour = 1530;
 
   const eca_isk = prices["Expert Cerebral Accelerator"][buySellLower];
-  const eca_sp = 0;
-  const eca_isk_sp = eca_isk / eca_sp;
+  const eca_hours = (300 * (1 + (0.2 * biologySkillLevel))) * (1 + Number.parseFloat(biologyImplant));
+  const eca_bonus = 8;
+  const eca_sp_per_hour = ((17+eca_bonus)+((17*0.5)+eca_bonus))*60;
+  const eca_sp = ((eca_hours * eca_sp_per_hour) - (eca_hours * base_sp_per_hour)).toFixed(0);
+  const eca_isk_sp = (eca_isk / eca_sp).toFixed(2);
 
   const mca_isk = prices["Master-at-Arms Cerebral Accelerator"][buySellLower];
-  const mca_sp = 0;
-  const mca_isk_sp = mca_isk / mca_sp;
+  const mca_hours = (24 * (1 + (0.2 * biologySkillLevel))) * (1 + Number.parseFloat(biologyImplant));
+  const mca_bonus = 10;
+  const mca_sp_per_hour = ((17+mca_bonus)+((17*0.5)+mca_bonus))*60;
+  const mca_sp = ((mca_hours * mca_sp_per_hour) - (mca_hours * base_sp_per_hour)).toFixed(0);
+  const mca_isk_sp = (mca_isk / mca_sp).toFixed(2);
 
   return (
     <div>
       <h1>Accelerators</h1>
-
-      <h3>Jita {buySellUpper} Value</h3>
-      <button onClick={e => setUseSellValue(!useSellValue)}>Toggle buy/sell value</button>
-
       <table>
         <thead>
           <tr>
