@@ -16,9 +16,9 @@ function BiologyImplantSelector({value, setter}) {
         value={value}
         onChange={e => setter(e.target.value)}
       >
-        <FormControlLabel value={0} control={<Radio />} label="None" />
-        <FormControlLabel value={.05} control={<Radio />} label="BY-805" />
-        <FormControlLabel value={.1} control={<Radio />} label="BY-810" />
+        <FormControlLabel value={0.00} control={<Radio />} label="None" />
+        <FormControlLabel value={0.05} control={<Radio />} label="BY-805" />
+        <FormControlLabel value={0.10} control={<Radio />} label="BY-810" />
       </RadioGroup>
     </FormControl>
   );
