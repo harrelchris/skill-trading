@@ -48,6 +48,90 @@ function Index() {
 
   useEffect(() => {
     ep.getPrices().then(priceData => setPrices(priceData));
+
+    if (isAuthenticated()) {
+      if (localStorage.getItem("fetched") !== null) {
+
+        let _bip = localStorage.getItem("_bip");
+        _bip = Number.parseFloat(_bip)
+        setBiologyImplant(_bip);
+
+        let _bsl = localStorage.getItem("_bsl");
+        _bsl = Number.parseInt(_bsl);
+        setBiologySkillLevel(_bsl);
+
+        let _spr = localStorage.getItem("_spr");
+        _spr = Number.parseInt(_spr);
+        setSkillPointRange(_spr);
+
+        return;
+      } else {
+        localStorage.setItem("fetched", "1");
+      }
+
+      const characterID = localStorage.getItem("id");
+      const accessToken = localStorage.getItem("accessToken");
+
+      const skillsURL = `https://esi.evetech.net/latest/characters/${characterID}/skills/?datasource=tranquility`
+      fetch(skillsURL, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Set Skill Point Range
+          const totalSP = data["total_sp"];
+          let _spr;
+          if (totalSP >= 80000000) {
+            _spr = 3;
+          } else if (totalSP >= 50000000) {
+            _spr = 2;
+          } else if (totalSP >= 5000000) {
+            _spr = 1;
+          } else {
+            _spr = 0;
+          }
+          localStorage.setItem("_spr", _spr)
+          setSkillPointRange(_spr);
+
+          // Set Biology Skill Level
+          // 3405 biology
+          for (let skill of data["skills"]) {
+            if (skill["skill_id"] === 3405) {
+              const _bsl = skill["trained_skill_level"];
+              localStorage.setItem("_bsl", _bsl);
+              setBiologySkillLevel(_bsl);
+            }
+          }
+
+        })
+        .catch(error => console.error(error))
+
+      // Set Biology Implant
+      const implantURL = `https://esi.evetech.net/latest/characters/${characterID}/implants/?datasource=tranquility`
+      fetch(implantURL, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          let _bip;
+          if (data.includes(27148)) {
+            _bip = 0.10;
+          } else if (data.includes(27147)) {
+            _bip = 0.05;
+          } else {
+            _bip = 0.00;
+          }
+          localStorage.setItem("_bip", _bip);
+          setBiologyImplant(_bip);
+        })
+        .catch(error => console.error(error))
+    }
   }, []);
 
   return (
