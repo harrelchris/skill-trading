@@ -10,6 +10,10 @@ function Logout() {
     localStorage.removeItem("expiresAt");
     localStorage.removeItem("name");
     localStorage.removeItem("id");
+    localStorage.removeItem("fetched");
+    localStorage.removeItem("_bip");
+    localStorage.removeItem("_bsp");
+    localStorage.removeItem("_spr");
     navigate("/");
   }, []);
 
