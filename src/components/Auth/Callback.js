@@ -74,7 +74,7 @@ function Callback({code, state}) {
         for (let key in token) {
           localStorage.setItem(key, token[key]);
         }
-        navigate("/dashboard")
+        navigate("/")
       })
       .catch((error) => {
         console.error(error);
