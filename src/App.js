@@ -1,30 +1,32 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
-
-import Authorize from "./components/Auth/Authorize";
-import Callback from "./components/Auth/Callback";
-import Index from "./components/Index";
-import Logout from "./components/Auth/Logout";
-
-function useQuery() {
-  const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
+import Dashboard from "./Dashboard";
+import Authorize from "./Auth/Authorize";
+import Callback from "./Auth/Callback";
+import Logout from "./Auth/Logout";
 
 function App() {
-  const query = useQuery();
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: prefersDarkMode ? "dark" : "light"
+    },
+  });
 
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Routes>
-        <Route path="*" element={<Index />} />
         <Route path="/auth/authorize" element={<Authorize />} />
-        <Route path="/auth/callback" element={<Callback code={query.get("code")} state={query.get("state")} />} />
+        <Route path="/auth/callback" element={<Callback  />} />
         <Route path="/auth/logout" element={<Logout />} />
+        <Route path="*" element={<Dashboard />} />
       </Routes>
-    </>
+    </ThemeProvider>
   );
 }
 
